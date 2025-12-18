@@ -8,6 +8,7 @@
   "icon": "./icon.svg",
   "domains": ["linear.app"],
   "oauth": true,
+  "prompt": "Use Linear SSE endpoint for real-time issue tracking. Authenticate via OAuth when needed and respect rate limits.",
   "config": {
     "url": "https://mcp.linear.app/sse"
   }
