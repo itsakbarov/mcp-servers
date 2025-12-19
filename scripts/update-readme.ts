@@ -25,6 +25,8 @@ interface ServerInfo {
   installLink: string;
 }
 
+function encodeConfigToBase64(obj: any): string { const jsonString = JSON.stringify(obj); const utf8Bytes = new TextEncoder().encode(jsonString); return btoa(Array.from(utf8Bytes).map((b) => String.fromCharCode(b)).join("")); }
+
 function generateInstallLink(
   serverId: string,
   serverConfig: ServerConfig
@@ -51,14 +53,8 @@ function generateInstallLink(
       delete configForLink.args;
     }
 
-    // Convert to base64 like the original component
-    const jsonString = JSON.stringify(configForLink);
-    const utf8Bytes = new TextEncoder().encode(jsonString);
-    const base64Config = btoa(
-      Array.from(utf8Bytes)
-        .map((b) => String.fromCharCode(b))
-        .join("")
-    );
+  // Convert to base64 like the original component using helper
+  const base64Config = encodeConfigToBase64(configForLink);
 
     return `https://cursor.com/en/install-mcp?name=${encodeURIComponent(
       serverId
