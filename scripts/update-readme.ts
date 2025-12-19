@@ -31,10 +31,10 @@ function generateInstallLink(
 ): string {
   try {
     // Create a config object similar to what the MCP install link expects
-    let configForLink = { ...serverConfig.config };
+    let configForLink = { ...(serverConfig.config ?? {}) };
 
     // Handle special cases
-    if (!configForLink) {
+    if (Object.keys(configForLink).length === 0) {
       // For servers with only prompts (like Zapier), create a basic config
       if (serverConfig.prompt) {
         return `https://cursor.com/en/install-mcp?name=${encodeURIComponent(
