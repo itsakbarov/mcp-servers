@@ -76,7 +76,14 @@ async function generateReadme(): Promise<void> {
   // Read the index.json to get the ordered list of servers
   const indexPath = path.join(serversDir, "index.json");
   const indexFile = file(indexPath);
-  const serverIds: string[] = JSON.parse(await indexFile.text());
+  let serverIds: string[] = [];
+  try {
+    const indexFile = file(indexPath);
+    serverIds = JSON.parse(await indexFile.text());
+  } catch (error) {
+    console.warn(`Failed to read index.json at ${indexPath}:`, error);
+    serverIds = [];
+  }
 
   // Read each server's configuration
   const servers: ServerInfo[] = [];
